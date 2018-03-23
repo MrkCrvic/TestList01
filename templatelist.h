@@ -36,7 +36,7 @@ public:
 
     T at(int index)
     {
-        // ako se stavi assert onda nam nije potrebno try-catch
+        // ako se stavi assert ovdje onda nam nije potrebno try-catch
 
 
         //qDebug() << "Number is:";

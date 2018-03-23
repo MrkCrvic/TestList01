@@ -84,24 +84,18 @@ public:
 
     int index(T t)
     {
+        // returns -1 if element is not in the list
         TemplateList * pom = this;
         int k = -1;
-        try
+        while(pom != NULL)
         {
-            while(pom != NULL)
-            {
-                k++;
-                if(pom->data == t)
-                    return k;
-                pom = pom->next;
-            }
-            throw 9;
+            k++;
+            if(pom->data == t)
+                return k;
+            pom = pom->next;
         }
-        catch(int e)
-        {
-            qDebug() << "ERROR! Element not in the list!";
-        }
-
+        k = -1;
+        return k;
     }
 
     void pop()

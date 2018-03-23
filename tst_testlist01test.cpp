@@ -10,11 +10,15 @@ public:
     TestList01Test();
 
 private Q_SLOTS:
+    // append and at testing
     void testAppendAt();
     void testAppendAt_data();
     // index testing
     void testIndex();
     void testIndex_data();
+    // list_length testing
+    void testLength();
+    void testLength_data();
 };
 
 TestList01Test::TestList01Test()
@@ -121,6 +125,42 @@ void TestList01Test::testIndex()
     QCOMPARE(QString::number(charList), Expected);
     QCOMPARE(QString::number(stringList), Expected);
 
+}
+
+void TestList01Test::testLength_data()
+{
+    QTest::addColumn<int>("length");
+    QTest::addColumn<QString>("expected");
+
+    TemplateList<int> tempList(23);
+    tempList.append(34);
+    tempList.append(45);
+
+    int l1 = tempList.list_length();
+
+    tempList.append(56);
+    tempList.append(67);
+    tempList.append(78);
+    tempList.append(89);
+
+    int l2 = tempList.list_length();
+
+    tempList.pop();
+    tempList.pop();
+
+    int l3 = tempList.list_length();
+
+    QTest::newRow("first length: ") << l1 << "3";
+    QTest::newRow("second length: ") << l2 << "7";
+    QTest::newRow("third length: ") << l3 << "5";
+}
+
+void TestList01Test::testLength()
+{
+    QFETCH(int, length);
+    QFETCH(QString, expected);
+
+    QCOMPARE(QString::number(length), expected);
 }
 
 QTEST_APPLESS_MAIN(TestList01Test)

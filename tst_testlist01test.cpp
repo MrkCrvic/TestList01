@@ -12,9 +12,6 @@ public:
 private Q_SLOTS:
     void testAppendAt();
     void testAppendAt_data();
-
-    void testIndex();
-    void testIndex_data();
 };
 
 TestList01Test::TestList01Test()
@@ -31,6 +28,9 @@ void TestList01Test::testAppendAt_data()
     // char values of TemplateList
     QTest::addColumn<char>("char_list");
     QTest::addColumn<char>("char_expected");
+    // QString values of TemplateList
+    QTest::addColumn<QString>("stringList");
+    QTest::addColumn<QString>("stringExpected");
 
     QList<int> list1;
     list1.append(1);
@@ -45,9 +45,13 @@ void TestList01Test::testAppendAt_data()
     tempList2.append('b');
     tempList2.append('f');
 
-    QTest::newRow("first elem: ") << list1.at(0) << tempList.at(0) << "1" << tempList2.at(0) << 'a';
-    QTest::newRow("second elem: ") << list1.at(1) << tempList.at(1) << "2" << tempList2.at(1) << 'b';
-    QTest::newRow("third elem: ") << list1.at(2) << tempList.at(2) << "7" << tempList2.at(2) << 'f';
+    TemplateList<QString> tempList3("ja");
+    tempList3.append("sam");
+    tempList3.append("Marko");
+
+    QTest::newRow("first elem: ") << list1.at(0) << tempList.at(0) << "1" << tempList2.at(0) << 'a' << tempList3.at(0) << "ja";
+    QTest::newRow("second elem: ") << list1.at(1) << tempList.at(1) << "2" << tempList2.at(1) << 'b' << tempList3.at(1) << "sam";
+    QTest::newRow("third elem: ") << list1.at(2) << tempList.at(2) << "7" << tempList2.at(2) << 'f' << tempList3.at(2) << "Marko";
 
 }
 
@@ -60,24 +64,17 @@ void TestList01Test::testAppendAt()
     //char fetch
     QFETCH(char, char_list);
     QFETCH(char, char_expected);
+    //QString fetch
+    QFETCH(QString, stringList);
+    QFETCH(QString, stringExpected);
 
     // int compare
     QCOMPARE(QList_values, TemplateList_values);
     QCOMPARE(QString::number(TemplateList_values), Expected_values);
     // char compare
     QCOMPARE(char_list, char_expected);
-}
-
-void TestList01Test::testIndex_data()
-{
-
-    //QTest::addColumn<>
-
-}
-
-void TestList01Test::testIndex()
-{
-
+    // QString compare
+    QCOMPARE(stringList, stringExpected);
 }
 
 QTEST_APPLESS_MAIN(TestList01Test)
